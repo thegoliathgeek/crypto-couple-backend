@@ -16,6 +16,15 @@ export class User {
 
   @Prop()
   name: string;
+
+  @Prop({ unique: true })
+  username: string;
+
+  @Prop()
+  password: string;
+
+  @Prop()
+  otp?: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

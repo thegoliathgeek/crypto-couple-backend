@@ -1,5 +1,5 @@
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
-import { CreateUserArgs } from './user.args';
+import { CreateUserArgs, LoginArgs } from './user.args';
 import { UserReturnType } from './user.return.type';
 import { UserService } from './user.service';
 
@@ -14,6 +14,13 @@ export class UserResolver {
   @Mutation(() => UserReturnType)
   async addUser(@Args({ name: 'args' }) args: CreateUserArgs) {
     return this.userService.addUser(args);
+  }
+
+  @Mutation(() => UserReturnType)
+  async login(@Args('args') args: LoginArgs) {
+    return this.userService.findUserByUsername({
+      ...args,
+    });
   }
 
   @Query(() => UserReturnType)

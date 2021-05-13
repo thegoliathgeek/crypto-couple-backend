@@ -10,4 +10,19 @@ export class CreateUserArgs {
 
   @Field(() => Int)
   age: number;
+
+  @Field()
+  username: string;
+
+  @Field()
+  password: string;
+}
+
+@InputType()
+export class LoginArgs {
+  @Field()
+  username: string;
+
+  @Field()
+  password: string;
 }

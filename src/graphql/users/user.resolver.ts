@@ -15,4 +15,9 @@ export class UserResolver {
   async addUser(@Args({ name: 'args' }) args: CreateUserArgs) {
     return this.userService.addUser(args);
   }
+
+  @Query(() => UserReturnType)
+  async getUserById(@Args('id') id: string) {
+    return this.userService.getUserById(id);
+  }
 }

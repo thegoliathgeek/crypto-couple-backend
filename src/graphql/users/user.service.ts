@@ -12,12 +12,13 @@ export class UserService {
   constructor(
     @InjectModel(UserCollection) private userModel: Model<UserDocument>,
   ) {}
-  getUser() {
-    return { name: 'Dhanush', age: 23 };
-  }
 
   async addUser(body: User) {
     const createdUser = await this.userModel.create(body);
     return createdUser;
+  }
+
+  async getUserById(id: string) {
+    return this.userModel.findById(id);
   }
 }

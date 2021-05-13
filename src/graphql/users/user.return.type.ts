@@ -3,7 +3,7 @@ import { ObjectType, Field, Int } from '@nestjs/graphql';
 @ObjectType()
 export class UserReturnType {
   @Field({ nullable: true })
-  id: string;
+  _id: string;
 
   @Field()
   name: string;

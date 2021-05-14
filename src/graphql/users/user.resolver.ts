@@ -13,7 +13,6 @@ export class UserResolver {
   @UseGuards(AuthGuard('local'))
   @Query(() => String)
   async sayHello(@Context() ctx) {
-    console.log(ctx.req.user);
     return 'Hello Bitch';
   }
 
@@ -29,9 +28,9 @@ export class UserResolver {
     });
   }
 
+  @UseGuards(GraphqlJwtGuard)
   @Query(() => UserReturnType)
   async getUserById(@Context() ctx, @Args('id') id: string) {
-    console.log(ctx.req.user);
     return this.userService.getUserById(id);
   }
 }

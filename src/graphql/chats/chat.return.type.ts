@@ -5,3 +5,9 @@ export class ChatSubReturnType {
   @Field()
   data: string;
 }
+
+@ObjectType()
+export class ChatSessionReturnType {
+  @Field()
+  name: string;
+}

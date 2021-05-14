@@ -8,11 +8,13 @@ import {
 } from 'src/mongo/schemas/user.schema';
 import { hash, compare } from 'bcrypt';
 import { UserInputError } from 'apollo-server-errors';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectModel(UserCollection) private userModel: Model<UserDocument>,
+    private readonly jwtService: JwtService,
   ) {}
 
   async addUser(body: User) {
@@ -27,13 +29,30 @@ export class UserService {
     return this.userModel.findById(id);
   }
 
-  async findUserByUsername(body: { username: string; password: string }) {
+  async validateUser(body: { username: string; password: string }) {
     const user: any = await this.userModel.findOne({ username: body.username });
     if (!user) {
       throw new UserInputError('User not found');
     }
     if (await compare(body.password, user.password)) {
       return user;
+    }
+    throw new UserInputError('User not found');
+  }
+
+  async login(body: { username: string; password: string }) {
+    const user: any = await this.userModel.findOne({ username: body.username });
+    if (!user) {
+      throw new UserInputError('User not found');
+    }
+    if (await compare(body.password, user.password)) {
+      return {
+        access_token: this.jwtService.sign({
+          username: user.username,
+          id: user._id + '',
+          name: user.name,
+        }),
+      };
     }
     throw new UserInputError('User not found');
   }

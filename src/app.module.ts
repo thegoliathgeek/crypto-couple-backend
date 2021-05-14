@@ -4,6 +4,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuthModule } from './auth/auth.module';
 import { ChatsGraphqlModule } from './graphql/chats/chats.module';
 import { UserGraphqlModule } from './graphql/users/user.module';
 
@@ -12,9 +13,13 @@ import { UserGraphqlModule } from './graphql/users/user.module';
     ConfigModule.forRoot(),
     UserGraphqlModule,
     ChatsGraphqlModule,
+    AuthModule,
     GraphQLModule.forRoot({
       autoSchemaFile: true,
       installSubscriptionHandlers: true,
+      context(val) {
+        return val;
+      },
     }),
     MongooseModule.forRoot(process.env.MONGO_URL, { useCreateIndex: true }),
   ],

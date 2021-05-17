@@ -1,24 +1,20 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { JwtAuthModule } from 'src/auth/jwt-auth.module';
 import { UserCollection, UserSchema } from 'src/mongo/schemas/user.schema';
 import { UserResolver } from './user.resolver';
 import { UserService } from './user.service';
-import { JwtModule } from '@nestjs/jwt';
-import { JwtStrategy } from 'src/auth/strategies/jwt.strategy';
 @Module({
   imports: [
+    JwtAuthModule,
     MongooseModule.forFeature([
       {
         schema: UserSchema,
         name: UserCollection,
       },
     ]),
-    JwtModule.register({
-      secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: process.env.EXPIRES_IN },
-    }),
   ],
-  providers: [UserResolver, UserService, JwtStrategy],
-  exports: [UserService, JwtModule],
+  providers: [UserResolver, UserService],
+  exports: [UserService],
 })
 export class UserGraphqlModule {}

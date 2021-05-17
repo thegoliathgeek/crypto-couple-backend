@@ -5,18 +5,19 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
+import { GateWayModule } from './gateway/gateway.module';
 import { ChatsGraphqlModule } from './graphql/chats/chats.module';
 import { UserGraphqlModule } from './graphql/users/user.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({ isGlobal: true, cache: true }),
     UserGraphqlModule,
     ChatsGraphqlModule,
+    GateWayModule,
     AuthModule,
     GraphQLModule.forRoot({
       autoSchemaFile: true,
-      installSubscriptionHandlers: true,
       context(val) {
         return val;
       },

@@ -19,4 +19,7 @@ export class UserReturnType {
 export class TokenReturnType {
   @Field()
   access_token: string;
+
+  @Field()
+  user_id: string;
 }

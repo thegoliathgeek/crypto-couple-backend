@@ -52,6 +52,7 @@ export class UserService {
           id: user._id + '',
           name: user.name,
         }),
+        user_id: user._id + '',
       };
     }
     throw new UserInputError('User not found');

@@ -3,20 +3,22 @@ import { Document, Schema as SchemaM } from 'mongoose';
 
 @Schema()
 export class Chat {
-  @Prop()
-  _id: string;
-
+  @Prop({ auto: true })
+  _id: SchemaM.Types.ObjectId;
   @Prop()
   data: string;
 
   @Prop()
-  toPhoneNo: string;
+  to: string;
 
   @Prop()
-  fromPhoneNo: string;
+  from: string;
 
   @Prop()
-  timeStamp: SchemaM.Types.Date;
+  timeStamp: number;
+
+  @Prop({ default: false })
+  sent: boolean;
 }
 
 export type ChatDocument = Chat | Document;
